@@ -1,0 +1,27 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "人气排行";
+}
+
+@foreach (var item in Model.Movies)
+{
+    <section class="movie">
+        <a asp-page="./Detail" asp-route-id="@item.Id">
+            <img class="poster" src="@item.PosterLink" />
+        </a>
+        <div class="content">
+            <h3 class="title">@item.Name</h3>
+            <p class="descript">@item.Description</p>
+            <p class="update-time">
+                <span>
+                    @item.RecordCreatedTime.ToShortDateString() | @item.RecordCreatedUser
+                </span>
+            </p>
+            <p class="user-actions">
+                <span class="action iconfont icon-like"></span>
+                <span class="action iconfont icon-shoucang"></span>
+            </p>
+        </div>
+    </section>
+}

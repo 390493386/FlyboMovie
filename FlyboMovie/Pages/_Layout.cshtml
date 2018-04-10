@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>@ViewData["Title"] - 飞播影视</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/icon-font/iconfont.css" />
+    <link rel="stylesheet" href="~/css/video-js.min.css" />
+</head>
+
+<body>
+    <header id="header">
+        <div class="logo">
+            <a asp-page="/Index">
+                <span class="iconfont icon-shouye"></span>
+            </a>
+        </div>
+        <div class="search">
+            <input placeholder="请输入关键词搜索" class="search-keyword" />
+            <span class="iconfont icon-sousuo"></span>
+            <!-- <input class="search-content"/> -->
+        </div>
+    </header>
+
+    <div id="body">
+        <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+        @RenderBody()
+    </div>
+
+    <footer id="footer">
+        <ul class="nav">
+            <li class="selected">
+                <span class="iconfont icon-remen"></span>人气
+            </li>
+            <li>
+                <span class="iconfont icon-zuijinbofang"></span>最新
+            </li>
+            <li>
+                <span class="iconfont icon-account"></span>我的
+            </li>
+        </ul>
+    </footer>
+</body>
+
+</html>

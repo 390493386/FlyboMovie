@@ -1,0 +1,135 @@
+﻿@page
+@model FlyboMovie.Pages.DetailModel
+@{
+    ViewData["Title"] = Model.Movie.Name;
+}
+
+<section class="movie-detail">
+    <h2 class="movie-title">
+        <span class="iconfont icon-biaotitubiao" style="font-size:1em;margin-right:10px;"></span>
+        @Model.Movie.Name
+    </h2>
+    <div class="movie-area">
+        <a>
+            <img src="@Model.Movie.PosterLink" />
+            <span class="iconfont icon-bofang"></span>
+        </a>
+        <div id="movie-player" class="movie-player" style="display:none;">
+            <video id="video-player" class="video-js" style="width:100%;height:100%;"
+                   controls controlslist="nodownload"
+                   preload="none" data-setup="{}"
+                   webkit-playsinline x5-playsinline playsinline>
+                <source src="@Model.Movie.MovieLink1" />
+            </video>
+        </div>
+    </div>
+    <div class="movie-desc">
+        <p class="desc-head">
+            <span class="iconfont icon-16" style="font-size:14px;margin-right:5px;"></span>详情
+        </p>
+        <p class="desc-content">
+            @Model.Movie.Description
+        </p>
+    </div>
+    <div id="movie-pay-dialog" class="movie-pay-mask" style="display:none;">
+        <div class="movie-pay">
+            <p class="pay-info">
+                试看结束<br />
+                请长按识别下方二维码完成支付
+            </p>
+            <div class="pay-qr-code">
+                <img src="~/images/qrcode_5.png" />
+            </div>
+            <p class="finished-pay">支付完成</p>
+        </div>
+        <span class="iconfont icon-guanbi"></span>
+    </div>
+</section>
+
+<script src="~/js/video.min.js"></script>
+<script>
+    var onCompleteTry = function () {
+        $("#movie-pay-dialog").show();
+        $("#movie-player").hide();
+    };
+
+    var initMoviePlayer = function (seletorId, trySeconds, events) {
+        var videoPlayer = videojs(seletorId);
+
+        trySeconds = trySeconds && !isNaN(trySeconds) ? trySeconds : 5;
+        var canPlayFn = events && typeof events.onCheckCanPlay == 'function' ? events.onCheckCanPlay : function () {
+            return true;
+        };
+        videoPlayer.ready(function () {
+            var self = this;
+            var interval;
+            var completeTryFn = events && typeof events.onCompleteTry == 'function' ? events.onCompleteTry :
+                null;
+            var initInterval = function () {
+                return setInterval(function () {
+                    if (self.currentTime() > trySeconds && !canPlayFn()) {
+                        self.pause();
+                        if (completeTryFn) {
+                            completeTryFn();
+                        }
+                    }
+                }, 1000);
+                return null;
+            };
+            self.on('play', function () {
+                if (!interval) {
+                    interval = initInterval();
+                }
+                if (self.currentTime() > trySeconds && !canPlayFn()) {
+                    self.pause();
+                    if (completeTryFn) {
+                        completeTryFn();
+                    }
+                }
+            });
+            self.on('pause', function () {
+                if (interval) {
+                    clearInterval(interval);
+                    interval = null;
+                }
+            });
+
+            interval = initInterval();
+        });
+
+        return videoPlayer;
+    }
+
+    $(document).ready(function () {
+        var videoPlayer;
+        var checkMovieCanPlay = function () {
+            return '@Model.IsMoviePayed' == 'True';
+        };
+        //播放
+        $(".movie-area .icon-bofang").click(function () {
+            videoPlayer = initMoviePlayer("video-player", @Model.Movie.TrySeconds, {
+                onCheckCanPlay: checkMovieCanPlay,
+                onCompleteTry: onCompleteTry,
+            });
+            videoPlayer.play();
+            $("#movie-player").show();
+        });
+        //完成支付
+        $(".movie-pay .finished-pay").click(function () {
+            $.get("/detail?handler=payed", function (result) { 
+                debugger
+            });
+
+            //moviePayed = false;
+            //if (moviePayed) {
+            //    $("#movie-pay-dialog").hide();
+            //    $("#movie-player").show();
+            //    videoPlayer.play();
+            //}
+        });
+        //支付窗口关闭
+        $(".movie-pay-mask .icon-guanbi").click(function () {
+            $("#movie-pay-dialog").hide();
+        });
+    });
+</script>
