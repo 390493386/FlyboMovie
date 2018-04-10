@@ -1,5 +1,10 @@
+using AutoMapper;
+using FlyboMovie.Common;
 using FlyboMovie.Data;
+using FlyboMovie.Data.Repository;
+using FlyboMovie.Data.Repository.Implement;
 using FlyboMovie.Filters;
+using FlyboMovie.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +30,7 @@ namespace FlyboMovie
             services.AddDbContext<AppDbContext>(options =>
             options.UseMySQL(Configuration.GetConnectionString("MySqlConnection")));
 
+            services.AddAutoMapper();
             services.AddMvc()
                 .AddRazorPagesOptions(options => 
                 {
@@ -40,6 +46,19 @@ namespace FlyboMovie
                 options.LoginPath = "/User/Login";
                 options.ExpireTimeSpan = TimeSpan.FromDays(7);
             });
+
+            services.AddScoped<IDbFactory, AppDbFactory>();
+
+            #region repostories
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
+            services.AddTransient<IUserRoleRepository, UserRoleRepository>();
+            services.AddTransient<IMovieRepository, MovieRepository>();
+            services.AddTransient<IBuyOrderRepository, BuyOrderRepository>();
+            #endregion
+
+            #region services
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +84,8 @@ namespace FlyboMovie
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
+
+            MappersRegister.RegistMappers();
         }
     }
 }

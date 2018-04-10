@@ -11,11 +11,13 @@ namespace FlyboMovie.Data.Common
     {
         TEntity Add(TEntity entity);
         bool Delete(TId id);
+        bool Delete(TEntity entity);
         bool Destroy(TId id);
+        bool Destroy(TEntity entity);
         TEntity Update(TEntity entity);
-        IQueryable<TEntity> GetAll();
-        IQueryable<TEntity> GetAllActive();
+        TEntity GetById(TId id);
+        TEntity GetByIdWithoutTracking(TId id);
         IQueryable<TEntity> Query(Expression<Func<TEntity, bool>> where);
-        IQueryable<TEntity> QueryAllActive();
+        IQueryable<TEntity> QueryWithTracking(Expression<Func<TEntity, bool>> where);
     }
 }
