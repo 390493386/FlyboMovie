@@ -36,6 +36,7 @@ namespace FlyboMovie.Pages
 
         public JsonResult OnGetPayed(int movieId)
         {
+            IsMoviePayed = true;
             return new JsonResult(true);
         }
     }

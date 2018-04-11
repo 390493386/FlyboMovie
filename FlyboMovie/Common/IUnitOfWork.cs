@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlyboMovie.Mapping
+namespace FlyboMovie.Common
 {
-    public interface IProfile
+    public interface IUnitOfWork
     {
+        int SaveChanges();
     }
 }

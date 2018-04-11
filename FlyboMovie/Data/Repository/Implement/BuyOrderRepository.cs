@@ -1,4 +1,5 @@
-﻿using FlyboMovie.Models;
+﻿using FlyboMovie.Common;
+using FlyboMovie.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ namespace FlyboMovie.Data.Repository.Implement
 {
     public class BuyOrderRepository : RecordRepositoryBase<int, BuyOrder>, IBuyOrderRepository
     {
-        public BuyOrderRepository(AppDbContext dbContext)
-            : base(dbContext)
+        public BuyOrderRepository(IDbFactory dbFactory)
+            : base(dbFactory)
         {
         }
     }

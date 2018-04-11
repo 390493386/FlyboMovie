@@ -1,16 +1,22 @@
-﻿using FlyboMovie.Common;
+﻿using AutoMapper;
+using FlyboMovie.Common;
+using FlyboMovie.Data.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using FlyboMovie.Data.Common;
 using System.Linq.Expressions;
 
 namespace FlyboMovie.Services
 {
     public class ServiceBase
     {
+        protected IUnitOfWork UnitOfWork { get; }
+
+        public ServiceBase(IUnitOfWork unitOfwork)
+        {
+            UnitOfWork = unitOfwork;
+        }
+
         public TTarget Map<TSource, TTarget>(TSource source)
         {
             return Mapper.Map<TSource, TTarget>(source);
@@ -33,7 +39,8 @@ namespace FlyboMovie.Services
     {
         protected IRecordRepository<TModel, TId> Repository { get; set; }
 
-        public DataServiceBase(IRecordRepository<TModel, TId> repository)
+        public DataServiceBase(IRecordRepository<TModel, TId> repository, IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
             Repository = repository;
         }
@@ -50,7 +57,12 @@ namespace FlyboMovie.Services
             return MapCollection<TModel, TDto>(modelList);
         }
 
-        //IEnumerable<TDto> GetAllActive();
+        public IEnumerable<TDto> GetAllActive()
+        {
+            var modelList = Repository.QueryWithTracking(x => !x.IsInactive).ToList();
+            return MapCollection<TModel, TDto>(modelList);
+        }
+
         public IEnumerable<TDto> Query(Expression<Func<TModel, bool>> where)
         {
             var modelList = Repository.Query(where).ToList();
@@ -61,11 +73,28 @@ namespace FlyboMovie.Services
         {
             var model = Map<TDto, TModel>(dto);
             model = Repository.Add(model);
+            UnitOfWork.SaveChanges();
 
-            return Map
+            return Map<TModel, TDto>(model);
         }
-        //TDto Update(TDto entity);
-        //bool Destroy(int id);
-        //bool Delete(int id);
+
+        public TDto Update(TDto dto)
+        {
+            var model = Map<TDto, TModel>(dto);
+            model = Repository.Update(model);
+            UnitOfWork.SaveChanges();
+
+            return Map<TModel, TDto>(model);
+        }
+
+        public bool Destroy(TId id)
+        {
+            return Repository.Destroy(id);
+        }
+
+        public bool Delete(TId id)
+        {
+            return Repository.Delete(id);
+        }
     }
 }

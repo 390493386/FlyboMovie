@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FlyboMovie.Data;
+using FlyboMovie.Dtos;
 using FlyboMovie.Models;
+using FlyboMovie.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -11,21 +13,18 @@ namespace FlyboMovie.Pages
 {
     public class IndexModel : PageModel
     {
-        AppDbContext _dbContext;
+        private IMovieService MovieService;
 
-        public IList<Movie> Movies { get; set; }
+        public IEnumerable<MovieLiteDto> Movies { get; set; }
 
-        public IndexModel(AppDbContext dbContext)
+        public IndexModel(IMovieService movieService)
         {
-            _dbContext = dbContext;
+            MovieService = movieService;
         }
 
         public void OnGet()
         {
-            Movies = _dbContext.Movies
-                .Where(m => !m.IsInactive)
-                .OrderBy(m => m.RecordCreatedTime)
-                .ToList();
+            Movies = MovieService.GetLatestMovies();
         }
     }
 }

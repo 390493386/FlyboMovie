@@ -5,6 +5,7 @@ using FlyboMovie.Data.Repository;
 using FlyboMovie.Data.Repository.Implement;
 using FlyboMovie.Filters;
 using FlyboMovie.Services;
+using FlyboMovie.Services.Implement;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -48,6 +49,7 @@ namespace FlyboMovie
             });
 
             services.AddScoped<IDbFactory, AppDbFactory>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             #region repostories
             services.AddTransient<IUserRepository, UserRepository>();
@@ -58,6 +60,8 @@ namespace FlyboMovie
             #endregion
 
             #region services
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMovieService, MovieService>();
             #endregion
         }
 

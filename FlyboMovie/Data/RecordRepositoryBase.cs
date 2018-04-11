@@ -65,6 +65,8 @@ namespace FlyboMovie.Data
 
         public TEntity Update(TEntity entity)
         {
+            entity.RecordUpdatedTime = DateTime.Now;
+            entity.RecordUpdatedUser = -1;
             if (!IsUnderTracking(entity))
             {
                 DbSet.Attach(entity);
