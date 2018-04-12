@@ -21,6 +21,8 @@ namespace FlyboMovie.Data
 
         public DbSet<BuyOrder> BuyOrders { get; set; }
 
+        public DbSet<OrderNumberSetting> OrderNumberSettings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -30,6 +32,7 @@ namespace FlyboMovie.Data
             builder.ApplyConfiguration(new UserRoleConfiguration());
             builder.ApplyConfiguration(new MovieConfiguration());
             builder.ApplyConfiguration(new BuyOrderConfiguration());
+            builder.ApplyConfiguration(new OrderNumberSettingConfiguration());
         }
     }
 }

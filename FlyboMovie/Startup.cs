@@ -57,11 +57,14 @@ namespace FlyboMovie
             services.AddTransient<IUserRoleRepository, UserRoleRepository>();
             services.AddTransient<IMovieRepository, MovieRepository>();
             services.AddTransient<IBuyOrderRepository, BuyOrderRepository>();
+            services.AddTransient<IOrderNumberSettingRepository, OrderNumberSettingRepository>();
             #endregion
 
             #region services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<IBuyOrderService, BuyOrderService>();
+            services.AddScoped<IOrderNumberSettingService, OrderNumberSettingService>();
             #endregion
         }
 

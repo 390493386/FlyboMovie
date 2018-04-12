@@ -46,7 +46,7 @@ namespace FlyboMovie.Migrations
 
                     b.Property<int>("Status");
 
-                    b.Property<int?>("UserId")
+                    b.Property<string>("UserId")
                         .HasMaxLength(50);
 
                     b.Property<string>("ValidationCode")
@@ -102,6 +102,33 @@ namespace FlyboMovie.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("FlyboMovie.Models.OrderNumberSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsInactive");
+
+                    b.Property<string>("Prefix")
+                        .HasMaxLength(10);
+
+                    b.Property<DateTime>("RecordCreatedTime");
+
+                    b.Property<int>("RecordCreatedUser");
+
+                    b.Property<DateTime?>("RecordUpdatedTime");
+
+                    b.Property<int?>("RecordUpdatedUser");
+
+                    b.Property<int>("Seed");
+
+                    b.Property<int>("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrderNumberSettings");
                 });
 
             modelBuilder.Entity("FlyboMovie.Models.Role", b =>

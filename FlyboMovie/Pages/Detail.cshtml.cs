@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using FlyboMovie.Common;
 using FlyboMovie.Data;
+using FlyboMovie.Dtos;
 using FlyboMovie.Models;
+using FlyboMovie.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -12,32 +15,44 @@ namespace FlyboMovie.Pages
 {
     public class DetailModel : PageModel
     {
-        AppDbContext _dbContext;
+        IMovieService _movieService;
+        IBuyOrderService _buyOrderService;
 
-        public Movie Movie { get; set; }
+        public MovieDto Movie { get; set; }
 
-        public bool IsMoviePayed { get; set; }
+        public BuyOrderDto MovieBuyOrder { get; set; }
 
-        public DetailModel(AppDbContext dbContext)
+        public DetailModel(IMovieService movieService, IBuyOrderService buyOrderService)
         {
-            _dbContext = dbContext;
+            _movieService = movieService;
+            _buyOrderService = buyOrderService;
         }
 
-        public void OnGet(int id)
+        public void OnGet(int movieId)
         {
-            var userId = ((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(c=>c.Type == ClaimTypes.NameIdentifier).Value;
+            var userId = HttpContext.GetUserId();
 
-            Movie = _dbContext.Movies.FirstOrDefault(m => m.Id == id);
-            var buyOrder = _dbContext.BuyOrders.FirstOrDefault(bo=>bo.UserId == userId
-                &&bo.MovieId == Movie.Id 
-                && bo.Status != Common.BuyOrderStatus.Created);
-            IsMoviePayed = buyOrder != null ? true : false;
+            Movie = _movieService.GetById(movieId);
+            var buyOrder = _buyOrderService.Query(bo => bo.UserId == userId && bo.MovieId == movieId)
+                .FirstOrDefault();
+            MovieBuyOrder = buyOrder;
         }
 
-        public JsonResult OnGetPayed(int movieId)
+        public JsonResult OnGetBuyOrder(int movieId)
         {
-            IsMoviePayed = true;
-            return new JsonResult(true);
+            var userId = HttpContext.GetUserId();
+            var buyOrder = _buyOrderService.Query(bo => bo.UserId == userId && bo.MovieId == movieId)
+                .FirstOrDefault();
+            if (buyOrder == null)
+            {
+                buyOrder = new BuyOrderDto()
+                {
+                    UserId = userId,
+                    MovieId = movieId,
+                };
+                buyOrder = _buyOrderService.Create(buyOrder);
+            }
+            return new JsonResult(buyOrder);
         }
     }
 }

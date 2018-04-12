@@ -24,7 +24,7 @@ namespace FlyboMovie.Pages
 
         public void OnGet()
         {
-            Movies = MovieService.GetLatestMovies();
+            Movies = MovieService.GetHotestMovies();
         }
     }
 }

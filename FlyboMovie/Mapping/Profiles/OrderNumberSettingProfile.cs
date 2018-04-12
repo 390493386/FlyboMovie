@@ -8,14 +8,12 @@ using System.Threading.Tasks;
 
 namespace FlyboMovie.Mapping.Profiles
 {
-    public class MovieProfile : Profile
+    public class OrderNumberSettingProfile:Profile
     {
-        public MovieProfile()
+        public OrderNumberSettingProfile()
         {
-            CreateMap<Movie, MovieDto>();
-            CreateMap<Movie, MovieLiteDto>();
-
-            CreateMap<MovieDto, Movie>();
+            CreateMap<OrderNumberSetting, OrderNumberSettingDto>();
+            CreateMap<OrderNumberSettingDto, OrderNumberSetting>();
         }
     }
 }

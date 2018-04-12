@@ -24,7 +24,7 @@ namespace FlyboMovie.Migrations
                     RecordUpdatedTime = table.Column<DateTime>(nullable: true),
                     RecordUpdatedUser = table.Column<int>(nullable: true),
                     Status = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(maxLength: 50, nullable: true),
+                    UserId = table.Column<string>(maxLength: 50, nullable: true),
                     ValidationCode = table.Column<string>(maxLength: 10, nullable: true)
                 },
                 constraints: table =>
@@ -57,6 +57,26 @@ namespace FlyboMovie.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Movies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderNumberSettings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:AutoIncrement", true),
+                    IsInactive = table.Column<bool>(nullable: false),
+                    Prefix = table.Column<string>(maxLength: 10, nullable: true),
+                    RecordCreatedTime = table.Column<DateTime>(nullable: false),
+                    RecordCreatedUser = table.Column<int>(nullable: false),
+                    RecordUpdatedTime = table.Column<DateTime>(nullable: true),
+                    RecordUpdatedUser = table.Column<int>(nullable: true),
+                    Seed = table.Column<int>(nullable: false),
+                    Type = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderNumberSettings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -125,6 +145,9 @@ namespace FlyboMovie.Migrations
 
             migrationBuilder.DropTable(
                 name: "Movies");
+
+            migrationBuilder.DropTable(
+                name: "OrderNumberSettings");
 
             migrationBuilder.DropTable(
                 name: "Roles");

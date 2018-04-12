@@ -32,7 +32,7 @@
         </p>
     </div>
     <div id="movie-pay-dialog" class="movie-pay-mask" style="display:none;">
-        <div class="movie-pay">
+        <div class="movie-pay" id="movie-pay-area">
             <p class="pay-info">
                 试看结束<br />
                 请长按识别下方二维码完成支付
@@ -42,6 +42,16 @@
             </div>
             <p class="finished-pay">支付完成</p>
         </div>
+        <div class="movie-pay" id="movie-admin-area" style="display:none;">
+            <p class="pay-info">
+                长按识别下方二维码添加管理员<br />
+                微信号:1320900885zh<br />
+                订单号:<span id="buy-order-number"></span><a style="font-size:14px;color:white;text-decoration:underline;">复制</a>
+            </p>
+            <div class="pay-qr-code">
+                <img src="~/images/qrcode_5.png" />
+            </div>
+        </div>
         <span class="iconfont icon-guanbi"></span>
     </div>
 </section>
@@ -50,6 +60,8 @@
 <script>
     var onCompleteTry = function () {
         $("#movie-pay-dialog").show();
+        $("#movie-pay-area").show();
+        $("#movie-admin-area").hide();
         $("#movie-player").hide();
     };
 
@@ -102,8 +114,10 @@
 
     $(document).ready(function () {
         var videoPlayer;
+        @{var moviePayed = Model.MovieBuyOrder != null && (Model.MovieBuyOrder.Status == Common.BuyOrderStatus.Confirmed || Model.MovieBuyOrder.Status == Common.BuyOrderStatus.Comsumed);};
+        var moviePayed = '@moviePayed' == 'True';
         var checkMovieCanPlay = function () {
-            return '@Model.IsMoviePayed' == 'True';
+            return moviePayed;
         };
         //播放
         $(".movie-area .icon-bofang").click(function () {
@@ -116,16 +130,18 @@
         });
         //完成支付
         $(".movie-pay .finished-pay").click(function () {
-            $.get("/detail?handler=payed", function (result) { 
-                debugger
+            $.get("/detail?handler=buyOrder&movieId=@Model.Movie.Id", function (buyOrder) {
+                if (buyOrder.status == 1 || buyOrder.status == 2) {
+                    moviePayed = true;
+                    $("#movie-pay-dialog").hide();
+                    $("#movie-player").show();
+                    videoPlayer.play();
+                } else {
+                    $("#movie-pay-area").hide();
+                    $("#movie-admin-area").show();
+                }
+                $("#buy-order-number").html(buyOrder.orderNumber);
             });
-
-            //moviePayed = false;
-            //if (moviePayed) {
-            //    $("#movie-pay-dialog").hide();
-            //    $("#movie-player").show();
-            //    videoPlayer.play();
-            //}
         });
         //支付窗口关闭
         $(".movie-pay-mask .icon-guanbi").click(function () {

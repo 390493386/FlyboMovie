@@ -22,4 +22,10 @@ namespace FlyboMovie.Common
         //已消费
         Comsumed = 2
     }
+
+    public enum OrderType
+    {
+        //购买单
+        BuyOrder = 0,
+    }
 }

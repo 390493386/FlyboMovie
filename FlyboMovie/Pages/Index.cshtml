@@ -7,7 +7,7 @@
 @foreach (var item in Model.Movies)
 {
     <section class="movie">
-        <a asp-page="./Detail" asp-route-id="@item.Id">
+        <a asp-page="./Detail" asp-route-movieId="@item.Id">
             <img class="poster" src="@item.PosterLink" />
         </a>
         <div class="content">
