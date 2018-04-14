@@ -32,11 +32,28 @@
 
     <footer id="footer">
         <ul class="nav">
-            <li class="selected">
-                <span class="iconfont icon-remen"></span>人气
+            @{
+                var currnetTab = ViewData.ContainsKey("CurrentTab") ? ViewData["CurrentTab"].ToString() : null;
+                var hottestClass = "";
+                var latestClass = "";
+                if (currnetTab == "hottest")
+                {
+                    hottestClass = "selected";
+                }
+                else if(currnetTab == "latest")
+                {
+                    latestClass = "selected";
+                }
+            }
+            <li class="@hottestClass">
+                <a asp-page="/Index" asp-route-tab="hottest">
+                    <span class="iconfont icon-remen"></span>人气
+                </a>
             </li>
-            <li>
-                <span class="iconfont icon-zuijinbofang"></span>最新
+            <li class="@latestClass">
+                <a asp-page="/Index" asp-route-tab="latest">
+                    <span class="iconfont icon-zuijinbofang"></span>最新
+                </a>
             </li>
             <li>
                 <span class="iconfont icon-account"></span>我的

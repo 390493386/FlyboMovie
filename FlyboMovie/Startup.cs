@@ -45,7 +45,7 @@ namespace FlyboMovie
             .AddCookie(options =>
             {
                 options.LoginPath = "/User/Login";
-                options.ExpireTimeSpan = TimeSpan.FromDays(7);
+                options.ExpireTimeSpan = TimeSpan.FromDays(30);
             });
 
             services.AddScoped<IDbFactory, AppDbFactory>();

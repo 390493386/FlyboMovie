@@ -1,0 +1,42 @@
+﻿@page
+@model FlyboMovie.Pages.Admin.OrderManageModel
+@{
+    ViewData["Title"] = "订单管理";
+}
+
+<h2>订单管理</h2>
+
+<form method="get">
+    <input name="orderNum" placeholder="请输入订单号查询"/>
+    <input type="submit" value="查询"/>
+</form>
+<table>
+    <thead>
+        <tr>
+            <th>订单号</th>
+            <th>电影名称</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+        if (Model.BuyOrders == null || Model.BuyOrders.Count == 0)
+        {
+            <tr>
+                <td colspan="3">无记录</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var order in Model.BuyOrders)
+            {
+                <tr>
+                    <td>@order.OrderNumber</td>
+                    <td>@order.MovieName</td>
+                    <td>确认</td>
+                </tr>
+            }
+        }
+        }
+    </tbody>
+</table>

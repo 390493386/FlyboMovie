@@ -1,7 +1,8 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "人气排行";
+    ViewData["Title"] = Model.PageTitle;
+    ViewData["CurrentTab"] = Model.CurrntTab;
 }
 
 @foreach (var item in Model.Movies)

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using FlyboMovie.Dtos;
 using FlyboMovie.Models;
-using FlyboMovie.Services;
 
 namespace FlyboMovie.Mapping.Profiles
 {
@@ -10,6 +10,9 @@ namespace FlyboMovie.Mapping.Profiles
         {
             CreateMap<BuyOrder, BuyOrderDto>();
             CreateMap<BuyOrderDto, BuyOrder>();
+
+            CreateMap<BuyOrder, BuyOrderLiteDto>();
+            CreateMap<BuyOrderLiteDto, BuyOrder>();
         }
     }
 }

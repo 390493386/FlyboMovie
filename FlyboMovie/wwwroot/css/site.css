@@ -11,6 +11,8 @@ body {
 
 a {
     text-decoration: none;
+    outline: none;
+    color: dimgray;
 }
 
 #header {
@@ -136,8 +138,11 @@ section.movie {
 
             #footer ul.nav li.selected {
                 background-color: #607D8B;
-                color: white;
                 border-radius: 5px;
+            }
+
+            #footer ul.nav li.selected a {
+                color: white;
             }
 
             #footer ul.nav li .iconfont {

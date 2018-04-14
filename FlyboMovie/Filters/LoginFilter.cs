@@ -24,7 +24,11 @@ namespace FlyboMovie.Filters
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var pricipal = new ClaimsPrincipal(identity);
 
-                await context.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, pricipal);
+                await context.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, 
+                    pricipal,new AuthenticationProperties()
+                    {
+                        IsPersistent = true,
+                    });
             }
             await next();
         }
