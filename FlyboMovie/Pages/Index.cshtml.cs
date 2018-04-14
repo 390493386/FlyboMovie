@@ -42,8 +42,9 @@ namespace FlyboMovie.Pages
             }
             else
             {
-                CurrntTab = null;
-                Movies = MovieService.Query(x => x.Name.Contains(keywords)).;
+                CurrntTab = "search";
+                PageTitle = "搜索结果";
+                Movies = MovieService.Search(keywords);
             }
         }
     }

@@ -10,7 +10,8 @@ namespace FlyboMovie.Services
 {
     public interface IMovieService : IDataService<Movie, MovieDto, int>
     {
-        IEnumerable<MovieLiteDto> GetLatestMovies();
-        IEnumerable<MovieLiteDto> GetHotestMovies();
+        IList<MovieLiteDto> GetLatestMovies();
+        IList<MovieLiteDto> GetHotestMovies();
+        IList<MovieLiteDto> Search(string keywords);
     }
 }

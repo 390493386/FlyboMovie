@@ -16,16 +16,22 @@ namespace FlyboMovie.Services.Implement
         {
         }
 
-        public IEnumerable<MovieLiteDto> GetHotestMovies()
+        public IList<MovieLiteDto> GetHotestMovies()
         {
             var hostestMovies = Repository.Query(x => true).OrderBy(x => x.LikedCount).ToList();
             return MapCollection<Movie, MovieLiteDto>(hostestMovies);
         }
 
-        public IEnumerable<MovieLiteDto> GetLatestMovies()
+        public IList<MovieLiteDto> GetLatestMovies()
         {
             var latestMovies = Repository.Query(x => true).OrderBy(x => x.RecordCreatedTime).ToList();
             return MapCollection<Movie, MovieLiteDto>(latestMovies);
+        }
+
+        public IList<MovieLiteDto> Search(string keywords)
+        {
+            var results = Repository.Query(x => x.Name.Contains(keywords)).ToList();
+            return MapCollection<Movie, MovieLiteDto>(results);
         }
     }
 }
