@@ -17,31 +17,34 @@ namespace FlyboMovie.Pages
 
         public string CurrntTab { get; set; }
         public string PageTitle { get; set; }
-        public IEnumerable<MovieLiteDto> Movies { get; set; }
+        public IList<MovieLiteDto> Movies { get; set; }
 
         public IndexModel(IMovieService movieService)
         {
             MovieService = movieService;
         }
 
-        public void OnGet(string tab)
+        public void OnGet(string tab, string keywords)
         {
-            CurrntTab = String.IsNullOrEmpty(tab) ? "hottest" : tab;
-            if (CurrntTab == "hottest")
+            if (String.IsNullOrEmpty(keywords))
             {
-                PageTitle = "人气";
-                Movies = MovieService.GetHotestMovies();
+                CurrntTab = String.IsNullOrEmpty(tab) ? "hottest" : tab;
+                if (CurrntTab == "hottest")
+                {
+                    PageTitle = "人气";
+                    Movies = MovieService.GetHotestMovies();
+                }
+                else if (CurrntTab == "latest")
+                {
+                    PageTitle = "最新";
+                    Movies = MovieService.GetLatestMovies();
+                }
             }
-            else if (CurrntTab == "latest")
+            else
             {
-                PageTitle = "最新";
-                Movies = MovieService.GetLatestMovies();
+                CurrntTab = null;
+                Movies = MovieService.Query(x => x.Name.Contains(keywords)).;
             }
-        }
-
-        public void OnGetSearch(string keywords)
-        {
-            Movies = MovieService.GetLatestMovies();
         }
     }
 }

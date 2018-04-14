@@ -12,6 +12,19 @@
 </head>
 
 <body>
+    @{
+        var currnetTab = ViewData.ContainsKey("CurrentTab") ? ViewData["CurrentTab"].ToString() : null;
+        var hottestClass = "";
+        var latestClass = "";
+        if (currnetTab == "hottest")
+        {
+            hottestClass = "selected";
+        }
+        else if (currnetTab == "latest")
+        {
+            latestClass = "selected";
+        }
+    }
     <header id="header">
         <div class="logo">
             <a asp-page="/Index">
@@ -19,9 +32,11 @@
             </a>
         </div>
         <div class="search">
-            <input placeholder="请输入关键词搜索" class="search-keyword" />
-            <span class="iconfont icon-sousuo"></span>
-            <!-- <input class="search-content"/> -->
+            <form id="search-form" asp-page="/Index" method="get">
+                <input type="hidden" name="tab" value="@currnetTab"/>
+                <input name="keywords" placeholder="请输入关键词搜索" class="search-keyword" />
+                <span class="iconfont icon-sousuo"></span>
+            </form>
         </div>
     </header>
 
@@ -32,19 +47,6 @@
 
     <footer id="footer">
         <ul class="nav">
-            @{
-                var currnetTab = ViewData.ContainsKey("CurrentTab") ? ViewData["CurrentTab"].ToString() : null;
-                var hottestClass = "";
-                var latestClass = "";
-                if (currnetTab == "hottest")
-                {
-                    hottestClass = "selected";
-                }
-                else if(currnetTab == "latest")
-                {
-                    latestClass = "selected";
-                }
-            }
             <li class="@hottestClass">
                 <a asp-page="/Index" asp-route-tab="hottest">
                     <span class="iconfont icon-remen"></span>人气
@@ -60,6 +62,13 @@
             </li>
         </ul>
     </footer>
+    <script>
+        $(document).ready(function () {
+            $("#search-form .icon-sousuo").click(function () {
+                $("#search-form").submit();
+            });
+        });
+    </script>
 </body>
 
 </html>
