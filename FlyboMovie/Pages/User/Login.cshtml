@@ -1,0 +1,23 @@
+﻿@page
+@model FlyboMovie.Pages.LoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <h1>用户登陆</h1>
+    <form method="post">
+        <label for="account">用户名：</label><input name="account" asp-for="@Model.ViewModel.Account" />
+        <label for="password">密码：</label><input type="password" name="password" asp-for="@Model.ViewModel.Password" />
+        <input type="submit" value="登录" />
+    </form>
+    <div asp-validation-summary="All"></div>
+</body>
+</html>

@@ -1,13 +1,14 @@
 ﻿using FlyboMovie.Common;
 using FlyboMovie.Dtos;
 using FlyboMovie.Models;
-using System.Collections.Generic;
+using FlyboMovie.ViewModels;
 
 namespace FlyboMovie.Services
 {
     public interface IBuyOrderService: IDataService<BuyOrder, BuyOrderDto, int>
     {
         BuyOrderDto Create(BuyOrderDto buyOrder);
-        List<BuyOrderLiteDto> SearchCreatedOrders(string orderNumber);
+        Page<BuyOrderLiteDto> SearchCreatedOrders(OrderSearchCriteria searchCriteria);
+        void ConfirmOrder(int orderId);
     }
 }

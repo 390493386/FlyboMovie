@@ -15,6 +15,15 @@ namespace FlyboMovie.Dtos
         public int Points { get; set; }
     }
 
+    public class UserLoginDto
+    {
+        public string Id { get; set; }
+        public string Account { get; set; }
+        public string Name { get; set; }
+        public UserType Type { get; set; }
+        public string Password { get; set; }
+    }
+
     public class RoleDto
     {
         public string Name { get; set; }

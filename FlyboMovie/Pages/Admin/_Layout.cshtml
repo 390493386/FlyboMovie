@@ -3,14 +3,26 @@
 
 <head>
     <title>@ViewData["Title"] - 网站后台</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
 </head>
 
 <body>
-    <ul>
-        <li><a asp-page="/Admin/OrderManage">订单管理</a></li>
-        <li><a asp-page="/Admin/UserManage">用户管理</a></li>
-    </ul>
-    @RenderBody()
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <header class="header">
+        <nav class="navbar navbar-inverse">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a asp-page="/Admin/OrderManage">订单管理</a></li>
+                    <li><a asp-page="/Admin/MovieManage">视频管理</a></li>
+                    <li><a asp-page="/Admin/UserManage">用户管理</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        @RenderBody()
+    </div>
 </body>
 
 </html>

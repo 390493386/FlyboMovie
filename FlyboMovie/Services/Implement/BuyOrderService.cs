@@ -2,6 +2,7 @@
 using FlyboMovie.Data.Repository;
 using FlyboMovie.Dtos;
 using FlyboMovie.Models;
+using FlyboMovie.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +30,17 @@ namespace FlyboMovie.Services.Implement
             return Add(buyOrder);
         }
 
-        public List<BuyOrderLiteDto> SearchCreatedOrders(string orderNumber)
+        public Page<BuyOrderLiteDto> SearchCreatedOrders(OrderSearchCriteria searchCriteria)
         {
             var ordersQuery = Repository.Query(x => x.Status == BuyOrderStatus.Created);
-            if (!String.IsNullOrEmpty(orderNumber))
+            if (!String.IsNullOrEmpty(searchCriteria.OrderNumber))
             {
-                ordersQuery = ordersQuery.Where(x => x.OrderNumber != null && x.OrderNumber.Contains(orderNumber));
+                ordersQuery = ordersQuery.Where(x => x.OrderNumber != null && x.OrderNumber.Contains(searchCriteria.OrderNumber));
             }
-            var orders = ordersQuery.Take(50).ToList();
+            var totalCount = ordersQuery.Count();
+            var orders = ordersQuery
+                .Skip((searchCriteria.PageIndex-1)* searchCriteria.PageSize)
+                .Take(searchCriteria.PageSize).ToList();
 
             var movieIds = orders.Select(x => x.MovieId).ToList();
             var movies = _movieRepository.Query(x => movieIds.Contains(x.Id)).ToList();
@@ -47,7 +51,17 @@ namespace FlyboMovie.Services.Implement
                 order.MovieName = movie != null ? movie.Name : null;
             }
 
-            return ordersDto.ToList();
+            return new Page<BuyOrderLiteDto>(searchCriteria.PageIndex,searchCriteria.PageSize, totalCount, ordersDto);
+        }
+
+        public void ConfirmOrder(int orderId)
+        {
+            var order = Repository.GetById(orderId);
+            if (order != null)
+            {
+                order.Status = BuyOrderStatus.Confirmed;
+                UnitOfWork.SaveChanges();
+            }
         }
     }
 }

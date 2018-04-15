@@ -1,0 +1,19 @@
+﻿* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    width:100%;
+    font-family:'Microsoft YaHei';
+}
+
+.header {
+    height:50px;
+    background-color:darkcyan;
+    color:white;
+}
+
+.nav {
+   color:white; 
+}

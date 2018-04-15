@@ -127,9 +127,29 @@
             videoPlayer.play();
             $("#movie-player").show();
         });
+
+        var getMovieBuyOrder = function (callback) {
+            $.get("/detail?handler=buyOrder&movieId=@Model.Movie.Id", function (buyOrder) {
+                if (callback) { 
+                    callback(buyOrder);
+                }
+
+                if (buyOrder.status == 1 || buyOrder.status == 2) {
+                    moviePayed = true;
+                    $("#movie-pay-dialog").hide();
+                    $("#movie-player").show();
+                    videoPlayer.play();
+                } else {
+                    $("#movie-pay-area").hide();
+                    $("#movie-admin-area").show();
+                }
+                $("#buy-order-number").html(buyOrder.orderNumber);
+            });
+        }
+
         //完成支付
         $(".movie-pay .finished-pay").click(function () {
-            $.get("/detail?handler=buyOrder&movieId=@Model.Movie.Id", function (buyOrder) {
+            getMovieBuyOrder(function (buyOrder) { 
                 if (buyOrder.status == 1 || buyOrder.status == 2) {
                     moviePayed = true;
                     $("#movie-pay-dialog").hide();
@@ -144,6 +164,11 @@
         });
         //支付窗口关闭
         $(".movie-pay-mask .icon-guanbi").click(function () {
+            getMovieBuyOrder(function (buyOrder) { 
+                if (buyOrder.status == 1 || buyOrder.status == 2) {
+                    moviePayed = true;
+                }
+            });
             $("#movie-pay-dialog").hide();
         });
     });
