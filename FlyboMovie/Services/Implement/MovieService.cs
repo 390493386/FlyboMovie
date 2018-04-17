@@ -33,5 +33,21 @@ namespace FlyboMovie.Services.Implement
             var results = Repository.Query(x => x.Name.Contains(keywords)).ToList();
             return MapCollection<Movie, MovieLiteDto>(results);
         }
+
+        public MovieDto CreateMovie(string name, string posterPath, string moviePath,
+            int price = 500, int trySeconds = 5)
+        {
+            var movie = new MovieDto()
+            {
+                Name = name,
+                LikedCount = 0,
+                CollectedCount = 0,
+                PosterLink = posterPath,
+                MovieLink1 = moviePath,
+                Price = price,
+                TrySeconds = trySeconds,
+            };
+            return Add(movie);
+        }
     }
 }

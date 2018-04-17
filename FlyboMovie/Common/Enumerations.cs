@@ -27,5 +27,7 @@ namespace FlyboMovie.Common
     {
         //购买单
         BuyOrder = 0,
+        //电影
+        Movie = 1,
     }
 }

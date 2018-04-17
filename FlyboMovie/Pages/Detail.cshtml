@@ -37,18 +37,18 @@
                 请长按识别下方二维码完成支付
             </p>
             <div class="pay-qr-code">
-                <img src="~/images/qrcode_5.png" />
+                <img src="~/images/qrcode_8_8.jpg" />
             </div>
             <p class="finished-pay">支付完成</p>
         </div>
         <div class="movie-pay" id="movie-admin-area" style="display:none;">
             <p class="pay-info">
                 长按识别下方二维码添加管理员<br />
-                微信号:1320900885zh<br />
-                订单号:<span id="buy-order-number"></span><a style="font-size:14px;color:white;text-decoration:underline;">复制</a>
+                微信号:T_T<br />
+                订单号:<span id="buy-order-number"></span><a id="copy-order-num" style="font-size:14px;color:white;text-decoration:underline;" data-clipboard-action="copy" data-clipboard-target="#buy-order-number"></a>
             </p>
             <div class="pay-qr-code">
-                <img src="~/images/qrcode_5.png" />
+                <img src="~/images/admin_qr_code.jpg" />
             </div>
         </div>
         <span class="iconfont icon-guanbi"></span>
@@ -171,5 +171,6 @@
             });
             $("#movie-pay-dialog").hide();
         });
+
     });
 </script>

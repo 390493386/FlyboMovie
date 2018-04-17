@@ -13,5 +13,7 @@ namespace FlyboMovie.Services
         IList<MovieLiteDto> GetLatestMovies();
         IList<MovieLiteDto> GetHotestMovies();
         IList<MovieLiteDto> Search(string keywords);
+        MovieDto CreateMovie(string name, string posterPath, string moviePath,
+            int price = 500, int trySeconds = 5);
     }
 }
