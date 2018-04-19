@@ -116,7 +116,7 @@
                 var orderId = currentBtn.data("order-id");
                 $.get("./orderManage?handler=confirmOrder&orderId=" + orderId, function (buyOrder) {
                     if (buyOrder) {
-                        currentBtn.hide();
+                        currentBtn.parents("tr").remove();
                     }
                 });
             }

@@ -1,6 +1,7 @@
 ﻿using FlyboMovie.Common;
 using FlyboMovie.Dtos;
 using FlyboMovie.Models;
+using FlyboMovie.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace FlyboMovie.Services
         IList<MovieLiteDto> Search(string keywords);
         MovieDto CreateMovie(string name, string posterPath, string moviePath,
             int price = 500, int trySeconds = 5);
+        Page<MovieLiteDto> SearchMovies(MovieSearchCriteria searchCriteria);
     }
 }

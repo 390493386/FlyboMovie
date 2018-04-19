@@ -2,6 +2,7 @@
 using FlyboMovie.Data.Repository;
 using FlyboMovie.Dtos;
 using FlyboMovie.Models;
+using FlyboMovie.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,22 @@ namespace FlyboMovie.Services.Implement
                 TrySeconds = trySeconds,
             };
             return Add(movie);
+        }
+
+        public Page<MovieLiteDto> SearchMovies(MovieSearchCriteria searchCriteria)
+        {
+            var moviesQuery = Repository.Query(x => true);
+            if (!String.IsNullOrEmpty(searchCriteria.MovieName))
+            {
+                moviesQuery = moviesQuery.Where(x => x.Name != null && x.Name.Contains(searchCriteria.MovieName));
+            }
+            var totalCount = moviesQuery.Count();
+            var movies = moviesQuery
+                .Skip((searchCriteria.PageIndex - 1) * searchCriteria.PageSize)
+                .Take(searchCriteria.PageSize).ToList();
+            var moviesDto = MapCollection<Movie, MovieLiteDto>(movies);
+
+            return new Page<MovieLiteDto>(searchCriteria.PageIndex, searchCriteria.PageSize, totalCount, moviesDto);
         }
     }
 }

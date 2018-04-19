@@ -15,6 +15,9 @@ namespace FlyboMovie.ViewModels
         [DisplayName("视频名称")]
         public string Title { get; set; }
 
+        [DisplayName("试播时间")]
+        public int? TrySeconds { get; set; }
+
         [Required(ErrorMessage ="请添加视频封面海报")]
         [DisplayName("视频封面海报")]
         public IFormFile Poster { get; set; }

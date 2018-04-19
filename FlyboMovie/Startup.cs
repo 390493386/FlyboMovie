@@ -47,6 +47,7 @@ namespace FlyboMovie
                 options.LoginPath = "/User/Login";
                 options.AccessDeniedPath = "/User/Login";
                 options.ExpireTimeSpan = TimeSpan.FromDays(30);
+                options.SlidingExpiration = true;
             });
 
             services.AddScoped<IDbFactory, AppDbFactory>();

@@ -89,12 +89,16 @@ namespace FlyboMovie.Services
 
         public bool Destroy(TId id)
         {
-            return Repository.Destroy(id);
+            var result = Repository.Destroy(id);
+            UnitOfWork.SaveChanges();
+            return result;
         }
 
         public bool Delete(TId id)
         {
-            return Repository.Delete(id);
+            var result = Repository.Delete(id);
+            UnitOfWork.SaveChanges();
+            return result;
         }
     }
 }

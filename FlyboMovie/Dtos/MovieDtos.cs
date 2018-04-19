@@ -30,5 +30,6 @@ namespace FlyboMovie.Dtos
         public string PosterLink { get; set; }
         public DateTime RecordCreatedTime { get; set; }
         public int RecordCreatedUser { get; set; }
+        public int? TrySeconds { get; set; }
     }
 }

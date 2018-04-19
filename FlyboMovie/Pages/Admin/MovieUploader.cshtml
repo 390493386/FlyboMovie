@@ -7,11 +7,16 @@
 <h3>添加视频</h3>
 <div class="row">
     <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
+        <form id="movie-upload-form" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label asp-for="ViewModel.Title" class="control-label"></label>
                 <input asp-for="ViewModel.Title" type="text" class="form-control" />
                 <span asp-validation-for="ViewModel.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ViewModel.TrySeconds" class="control-label"></label>
+                <input asp-for="ViewModel.TrySeconds" type="text" class="form-control" />
+                <span asp-validation-for="ViewModel.TrySeconds" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ViewModel.Poster" class="control-label"></label>
@@ -23,7 +28,18 @@
                 <input asp-for="ViewModel.Movie" type="file" accept=".mp4,.ogg" class="form-control" style="height:auto" />
                 <span asp-validation-for="ViewModel.Movie" class="text-danger"></span>
             </div>
-            <input type="submit" value="开始上传" class="btn btn-default" />
+            <button id="upload-movie" class="btn btn-default">开始上传</button>
         </form>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#upload-movie").click(function () { 
+            var uploadBtn = $(this);
+            uploadBtn.attr('disabled', "true");
+            uploadBtn.html("正在上传...");
+            $("#movie-upload-form").submit();
+            return true;
+        });
+    });
+</script>

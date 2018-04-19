@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using FlyboMovie.Common;
+﻿using FlyboMovie.Common;
 using FlyboMovie.Services;
 using FlyboMovie.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FlyboMovie.Pages.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class MovieUploaderModel : PageModel
     {
         private IMovieService _movieService;
@@ -28,7 +25,7 @@ namespace FlyboMovie.Pages.Admin
 
         }
 
-        public async void OnPostAsync()
+        public void OnPost()
         {
             if (ModelState.IsValid)
             {
@@ -37,9 +34,9 @@ namespace FlyboMovie.Pages.Admin
                     ModelState.AddModelError("ViewModel.Poster", "文件大小超过限制（1M）！");
                     return;
                 }
-                if (ViewModel.Movie.Length > 52428800)
+                if (ViewModel.Movie.Length > 209715200)
                 {
-                    ModelState.AddModelError("ViewModel.Movie", "文件大小超过限制（50M）！");
+                    ModelState.AddModelError("ViewModel.Movie", "文件大小超过限制（200M）！");
                     return;
                 }
 
@@ -48,7 +45,8 @@ namespace FlyboMovie.Pages.Admin
 
 
                 _movieService.CreateMovie(ViewModel.Title,
-                    FileHelper.RelativeImagePath + posterPath, FileHelper.RelativeVideoPath + moviePath);
+                    FileHelper.RelativeImagePath + posterPath, FileHelper.RelativeVideoPath + moviePath,
+                    trySeconds: ViewModel.TrySeconds ?? 10);
             }
         }
     }
