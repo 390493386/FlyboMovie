@@ -1,4 +1,5 @@
 ﻿using FlyboMovie.Common;
+using FlyboMovie.Dtos;
 using FlyboMovie.Services;
 using FlyboMovie.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -43,10 +44,14 @@ namespace FlyboMovie.Pages.Admin
                 var moviePath = FileHelper.SaveFile(FileHelper.VideoPath, ViewModel.Movie);
                 var posterPath = FileHelper.SaveFile(FileHelper.ImagePath, ViewModel.Poster);
 
-
-                _movieService.CreateMovie(ViewModel.Title,
-                    FileHelper.RelativeImagePath + posterPath, FileHelper.RelativeVideoPath + moviePath,
-                    trySeconds: ViewModel.TrySeconds ?? 10);
+                MovieDto movie = new MovieDto()
+                {
+                    Name = ViewModel.Title,
+                    PosterLink = FileHelper.RelativeImagePath + posterPath,
+                    MovieLink1 = FileHelper.RelativeVideoPath + moviePath,
+                    TrySeconds = ViewModel.TrySeconds
+                };
+                _movieService.CreateMovie(movie);
             }
         }
     }

@@ -8,6 +8,7 @@ namespace FlyboMovie.Dtos
     public class MovieDto
     {
         public int Id { get; set; }
+        public string MovieNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int LikedCount { get; set; }
@@ -23,6 +24,7 @@ namespace FlyboMovie.Dtos
     public class MovieLiteDto
     {
         public int Id { get; set; }
+        public string MovieNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int LikedCount { get; set; }

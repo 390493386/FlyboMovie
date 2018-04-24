@@ -11,11 +11,10 @@ namespace FlyboMovie.ViewModels
     public class MovieUploadViewModel
     {
         [Required(ErrorMessage = "请填写视频名称")]
-        [StringLength(100, MinimumLength = 3, ErrorMessage = "名称长度3-100")]
         [DisplayName("视频名称")]
         public string Title { get; set; }
 
-        [DisplayName("试播时间")]
+        [DisplayName("试播时间(秒)")]
         public int? TrySeconds { get; set; }
 
         [Required(ErrorMessage ="请添加视频封面海报")]

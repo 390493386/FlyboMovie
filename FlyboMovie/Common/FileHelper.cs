@@ -40,5 +40,17 @@ namespace FlyboMovie.Common
             }
             return newFileName;
         }
+
+        public static void DeleteFile(string filePath)
+        {
+            if (String.IsNullOrEmpty(filePath))
+            {
+                return;
+            }
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
     }
 }

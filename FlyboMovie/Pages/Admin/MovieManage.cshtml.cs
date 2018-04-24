@@ -40,7 +40,17 @@ namespace FlyboMovie.Pages.Admin
 
         public JsonResult OnGetDeleteMovie(int movieId)
         {
+            var movie = _movieService.GetById(movieId);
             var result = _movieService.Destroy(movieId);
+            //删除对应文件
+            if (movie != null)
+            {
+                var posterFileName = movie.PosterLink.Substring(FileHelper.RelativeImagePath.Length);
+                FileHelper.DeleteFile(FileHelper.ImagePath + posterFileName);
+                var videoFileName = movie.MovieLink1.Substring(FileHelper.RelativeVideoPath.Length);
+                FileHelper.DeleteFile(FileHelper.VideoPath + videoFileName);
+            }
+
             return new JsonResult(result);
         }
     }

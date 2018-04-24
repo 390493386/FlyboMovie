@@ -12,9 +12,13 @@ namespace FlyboMovie.Services.Implement
 {
     public class MovieService : DataServiceBase<Movie, MovieDto, int>, IMovieService
     {
-        public MovieService(IUnitOfWork unitOfWork, IMovieRepository movieRepository)
+        private IOrderNumberSettingService _orderNumberSettingService;
+
+        public MovieService(IUnitOfWork unitOfWork, IMovieRepository movieRepository,
+            IOrderNumberSettingService orderNumberSettingService)
             : base(movieRepository, unitOfWork)
         {
+            _orderNumberSettingService = orderNumberSettingService;
         }
 
         public IList<MovieLiteDto> GetHotestMovies()
@@ -35,19 +39,11 @@ namespace FlyboMovie.Services.Implement
             return MapCollection<Movie, MovieLiteDto>(results);
         }
 
-        public MovieDto CreateMovie(string name, string posterPath, string moviePath,
-            int price = 500, int trySeconds = 5)
+        public MovieDto CreateMovie(MovieDto movie)
         {
-            var movie = new MovieDto()
-            {
-                Name = name,
-                LikedCount = 0,
-                CollectedCount = 0,
-                PosterLink = posterPath,
-                MovieLink1 = moviePath,
-                Price = price,
-                TrySeconds = trySeconds,
-            };
+            movie.MovieNumber = _orderNumberSettingService.GenerateOrderNumber(OrderType.Movie);
+            movie.TrySeconds = movie.TrySeconds ?? 10;
+            movie.Price = 500;
             return Add(movie);
         }
 

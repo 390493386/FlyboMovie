@@ -40,7 +40,7 @@
                     foreach (var movie in Model.Movies.Items)
                     {
                         <tr>
-                            <td></td>
+                            <td>@movie.MovieNumber</td>
                             <td>@movie.Name</td>
                             <td>@movie.RecordCreatedTime.ToString("yyyy-MM-dd HH:mm")</td>
                             <td>@movie.TrySeconds</td>

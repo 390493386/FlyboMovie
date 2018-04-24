@@ -4,6 +4,8 @@ namespace FlyboMovie.Models
 {
     public class Movie : RecordBase<int>
     {
+        public string MovieNumber { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }

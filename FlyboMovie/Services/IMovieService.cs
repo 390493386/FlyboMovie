@@ -2,10 +2,7 @@
 using FlyboMovie.Dtos;
 using FlyboMovie.Models;
 using FlyboMovie.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FlyboMovie.Services
 {
@@ -14,8 +11,7 @@ namespace FlyboMovie.Services
         IList<MovieLiteDto> GetLatestMovies();
         IList<MovieLiteDto> GetHotestMovies();
         IList<MovieLiteDto> Search(string keywords);
-        MovieDto CreateMovie(string name, string posterPath, string moviePath,
-            int price = 500, int trySeconds = 5);
+        MovieDto CreateMovie(MovieDto movie);
         Page<MovieLiteDto> SearchMovies(MovieSearchCriteria searchCriteria);
     }
 }

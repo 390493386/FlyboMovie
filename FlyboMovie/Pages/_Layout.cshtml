@@ -25,43 +25,45 @@
             latestClass = "selected";
         }
     }
-    <header id="header">
-        <div class="logo">
-            <a asp-page="/Index">
-                <span class="iconfont icon-shouye"></span>
-            </a>
-        </div>
-        <div class="search">
-            <form id="search-form" asp-page="/Index" method="get">
-                <input type="hidden" name="tab" value="@currnetTab"/>
-                <input name="keywords" placeholder="请输入关键词搜索" class="search-keyword" />
-                <span class="iconfont icon-sousuo"></span>
-            </form>
-        </div>
-    </header>
+    <div id="main-content">
+        <header id="header">
+            <div class="logo">
+                <a asp-page="/Index">
+                    <span class="iconfont icon-shouye"></span>
+                </a>
+            </div>
+            <div class="search">
+                <form id="search-form" asp-page="/Index" method="get">
+                    <input type="hidden" name="tab" value="@currnetTab" />
+                    <input name="keywords" placeholder="请输入关键词搜索" class="search-keyword" />
+                    <span class="iconfont icon-sousuo"></span>
+                </form>
+            </div>
+        </header>
 
-    <div id="body">
-        <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-        @RenderBody()
+        <div id="body">
+            <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+            @RenderBody()
+        </div>
+
+        <footer id="footer">
+            <ul class="nav">
+                <li class="@hottestClass">
+                    <a asp-page="/Index" asp-route-tab="hottest">
+                        <span class="iconfont icon-remen"></span>人气
+                    </a>
+                </li>
+                <li class="@latestClass">
+                    <a asp-page="/Index" asp-route-tab="latest">
+                        <span class="iconfont icon-zuijinbofang"></span>最新
+                    </a>
+                </li>
+                <li>
+                    <span class="iconfont icon-account"></span>我的
+                </li>
+            </ul>
+        </footer>
     </div>
-
-    <footer id="footer">
-        <ul class="nav">
-            <li class="@hottestClass">
-                <a asp-page="/Index" asp-route-tab="hottest">
-                    <span class="iconfont icon-remen"></span>人气
-                </a>
-            </li>
-            <li class="@latestClass">
-                <a asp-page="/Index" asp-route-tab="latest">
-                    <span class="iconfont icon-zuijinbofang"></span>最新
-                </a>
-            </li>
-            <li>
-                <span class="iconfont icon-account"></span>我的
-            </li>
-        </ul>
-    </footer>
     <script>
         $(document).ready(function () {
             $("#search-form .icon-sousuo").click(function () {
