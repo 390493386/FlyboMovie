@@ -1,0 +1,9 @@
+﻿@page
+@model FlyboMovie.Pages.HottestMoviesModel
+@{
+    ViewData["Title"] = "人气排行";
+    ViewData["CurrentTab"] = Model.TabName;
+
+    Html.RenderPartial("./Components/_MoviesListPartial", Model.HottestMovies);
+}
+

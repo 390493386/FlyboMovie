@@ -1,0 +1,9 @@
+﻿@page
+@model FlyboMovie.Pages.LatestMoviesModel
+@{
+    ViewData["Title"] = "最新电影";
+    ViewData["CurrentTab"] = Model.TabName;
+
+    Html.RenderPartial("./Components/_MoviesListPartial", Model.LatestMovies);
+}
+
