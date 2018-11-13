@@ -14,13 +14,14 @@
     #main-content {
         width: 500px;
         height: 100%;
-        margin-left:calc(50% - 250px)
+        margin-left: calc(50% - 250px)
     }
 }
 
 body {
     width: 100%;
     height: 100%;
+    font-size: 0;
 }
 
 #main-content {
@@ -159,9 +160,9 @@ section.movie {
                 border-radius: 5px;
             }
 
-            #footer ul.nav li.selected a {
-                color: white;
-            }
+                #footer ul.nav li.selected a {
+                    color: white;
+                }
 
             #footer ul.nav li .iconfont {
                 /* color: black; */
@@ -210,12 +211,12 @@ section.movie {
         z-index: 100;
     }
 
-    .movie-detail .movie-pay-mask .icon-guanbi {
-        font-size:35px;
-        color:white;
-        float:right;
-        font-weight:bold;
-    }
+        .movie-detail .movie-pay-mask .icon-guanbi {
+            font-size: 35px;
+            color: white;
+            float: right;
+            font-weight: bold;
+        }
 
     .movie-detail .movie-pay {
         width: 100%;
@@ -226,28 +227,27 @@ section.movie {
         text-align: center;
     }
 
-    .movie-detail .movie-pay .pay-info {
-        padding-top: 15px;
-        font-size: 20px;
-        font-weight: bold;
-        color:red;
-    }
+        .movie-detail .movie-pay .pay-info {
+            padding-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: red;
+        }
 
         .movie-detail .movie-pay .pay-qr-code {
             margin-top: 10px;
         }
 
             .movie-detail .movie-pay .pay-qr-code img {
-                width:80%;
-                border-radius:5px;
+                width: 80%;
+                border-radius: 5px;
             }
 
         .movie-detail .movie-pay .finished-pay {
             margin-top: 5px;
-            padding-bottom:10px;
+            padding-bottom: 10px;
             text-decoration: underline;
-            font-size:18px;
-
+            font-size: 18px;
         }
 
     .movie-detail .movie-desc {

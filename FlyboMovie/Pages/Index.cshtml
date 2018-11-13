@@ -3,9 +3,11 @@
 @{
     ViewData["Title"] = Model.PageTitle;
     ViewData["CurrentTab"] = Model.CurrntTab;
+
+    //Html.RenderPartial("./Components/_MoviesListPartial", Model.Movies);
 }
 
-@foreach (var item in Model.Movies)
+@*@foreach (var item in Model.Movies)
 {
     <section class="movie">
         <a asp-page="./Detail" asp-route-movieId="@item.Id">
@@ -25,4 +27,30 @@
             </p>
         </div>
     </section>
-}
+}*@
+
+<section style="width:32%;padding-left:1%;padding-top:2%;display:inline-block;">
+    <a asp-page="./Detail">
+        <img style="width:100%" src="~/images/jizhan.jpg" />
+    </a>
+</section>
+<section style="width:32%;padding-left:1%;padding-top:2%;display:inline-block;">
+    <a asp-page="./Detail">
+        <img style="width:100%" src="~/images/jizhan.jpg" />
+    </a>
+</section>
+<section style="width:32%;padding-left:1%;padding-top:2%;display:inline-block;">
+    <a asp-page="./Detail">
+        <img style="width:100%" src="~/images/jizhan.jpg" />
+    </a>
+</section>
+@*<section style="">
+    <a asp-page="./Detail">
+        <img class="poster" src="~/images/leishen3.jpg" />
+    </a>
+</section>
+<section style="">
+    <a asp-page="./Detail">
+        <img class="poster" src="~/images/moshou.jpg" />
+    </a>
+</section>*@
