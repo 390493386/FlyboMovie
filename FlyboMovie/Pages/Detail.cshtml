@@ -120,6 +120,9 @@
         };
         //播放
         $(".movie-area .icon-bofang").click(function () {
+            if (@Model.Movie.TrySeconds<= 0) {
+                onCompleteTry();
+            }
             videoPlayer = initMoviePlayer("video-player", @Model.Movie.TrySeconds, {
                 onCheckCanPlay: checkMovieCanPlay,
                 onCompleteTry: onCompleteTry,

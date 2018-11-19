@@ -4,53 +4,113 @@
     ViewData["Title"] = Model.PageTitle;
     ViewData["CurrentTab"] = Model.CurrntTab;
 
-    //Html.RenderPartial("./Components/_MoviesListPartial", Model.Movies);
+    Html.RenderPartial("./Components/_MoviesListPartial", Model.Movies);
 }
 
-@*@foreach (var item in Model.Movies)
-{
-    <section class="movie">
-        <a asp-page="./Detail" asp-route-movieId="@item.Id">
-            <img class="poster" src="@item.PosterLink" />
-        </a>
-        <div class="content">
-            <h3 class="title">@item.Name</h3>
-            <p class="descript">@item.Description</p>
-            <p class="update-time">
-                <span>
-                    @item.RecordCreatedTime.ToShortDateString() | @item.RecordCreatedUser
-                </span>
-            </p>
-            <p class="user-actions">
-                <span class="action iconfont icon-like"></span>
-                <span class="action iconfont icon-shoucang"></span>
-            </p>
-        </div>
-    </section>
-}*@
-
-<section style="width:32%;padding-left:1%;padding-top:2%;display:inline-block;">
-    <a asp-page="./Detail">
-        <img style="width:100%" src="~/images/jizhan.jpg" />
+@*<div class="movie">
+    <a href="#">
+        <img class="poster" src="~/images/jizhan.jpg" />
     </a>
-</section>
-<section style="width:32%;padding-left:1%;padding-top:2%;display:inline-block;">
-    <a asp-page="./Detail">
-        <img style="width:100%" src="~/images/jizhan.jpg" />
-    </a>
-</section>
-<section style="width:32%;padding-left:1%;padding-top:2%;display:inline-block;">
-    <a asp-page="./Detail">
-        <img style="width:100%" src="~/images/jizhan.jpg" />
-    </a>
-</section>
-@*<section style="">
-    <a asp-page="./Detail">
+    <div class="title">
+        <span>激战</span>
+    </div>
+</div>
+<div class="movie">
+    <a href="#">
         <img class="poster" src="~/images/leishen3.jpg" />
     </a>
-</section>
-<section style="">
-    <a asp-page="./Detail">
+    <div class="title">
+        <span>雷神3</span>
+    </div>
+</div>
+<div class="movie">
+    <a href="#">
         <img class="poster" src="~/images/moshou.jpg" />
     </a>
-</section>*@
+    <div class="title">
+        <span>魔兽</span>
+    </div>
+</div>
+<div class="movie">
+    <a href="#">
+        <img class="poster" src="~/images/zhuoyaoji2.jpg" />
+    </a>
+    <div class="title">
+        <span>捉妖记2</span>
+    </div>
+</div>
+<div class="movie">
+    <a href="#">
+        <img class="poster" src="~/images/jizhan.jpg" />
+    </a>
+    <div class="title">
+        <span>激战</span>
+    </div>
+</div>
+<div class="movie">
+    <a href="#">
+        <img class="poster" src="~/images/leishen3.jpg" />
+    </a>
+    <div class="title">
+        <span>雷神3</span>
+    </div>
+</div>
+<div class="movie">
+    <a href="#">
+        <img class="poster" src="~/images/moshou.jpg" />
+    </a>
+    <div class="title">
+        <span>魔兽</span>
+    </div>
+</div>
+<div class="movie">
+    <a href="#">
+        <img class="poster" src="~/images/zhuoyaoji2.jpg" />
+    </a>
+    <div class="title">
+        <span>捉妖记2</span>
+    </div>
+</div>
+<div class="movie">
+    <a href="#">
+        <img class="poster" src="~/images/jizhan.jpg" />
+    </a>
+    <div class="title">
+        <span>激战</span>
+    </div>
+</div>
+<div class="movie">
+    <a href="#">
+        <img class="poster" src="~/images/leishen3.jpg" />
+    </a>
+    <div class="title">
+        <span>雷神3</span>
+    </div>
+</div>
+<div class="movie">
+    <a href="#">
+        <img class="poster" src="~/images/moshou.jpg" />
+    </a>
+    <div class="title">
+        <span>魔兽</span>
+    </div>
+</div>
+<div class="movie">
+    <a href="#">
+        <img class="poster" src="~/images/zhuoyaoji2.jpg" />
+    </a>
+    <div class="title">
+        <span>捉妖记2</span>
+    </div>
+</div>*@
+
+@*<section style="">
+        <a asp-page="./Detail">
+            <img class="poster" src="~/images/leishen3.jpg" />
+        </a>
+    </section>
+    <section style="">
+        <a asp-page="./Detail">
+            <img class="poster" src="~/images/moshou.jpg" />
+        </a>
+    </section>*@

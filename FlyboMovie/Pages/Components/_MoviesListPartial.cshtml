@@ -4,23 +4,13 @@
 {
     @foreach (var item in Model)
     {
-        <section class="movie">
+        <div class="movie">
             <a asp-page="./Detail" asp-route-movieId="@item.Id">
                 <img class="poster" src="@item.PosterLink" />
             </a>
-            <div class="content">
-                <h3 class="title">@item.Name</h3>
-                <p class="descript">@item.Description</p>
-                <p class="update-time">
-                    <span>
-                        @item.RecordCreatedTime.ToShortDateString() | @item.RecordCreatedUser
-                    </span>
-                </p>
-                <p class="user-actions">
-                    <span class="action iconfont icon-like"></span>
-                    <span class="action iconfont icon-shoucang"></span>
-                </p>
+            <div class="title">
+                <span>@item.Name</span>
             </div>
-        </section>
+        </div>
     }
 }

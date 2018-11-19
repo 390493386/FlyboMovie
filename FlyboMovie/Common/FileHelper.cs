@@ -27,6 +27,10 @@ namespace FlyboMovie.Common
 
         public static string SaveFile(string path, IFormFile file)
         {
+            if (file == null)
+            {
+                return null;
+            }
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

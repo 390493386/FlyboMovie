@@ -4,6 +4,7 @@ using FlyboMovie.Data;
 using FlyboMovie.Data.Repository;
 using FlyboMovie.Data.Repository.Implement;
 using FlyboMovie.Filters;
+using FlyboMovie.Models;
 using FlyboMovie.Services;
 using FlyboMovie.Services.Implement;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -13,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 
 namespace FlyboMovie
 {
@@ -95,6 +97,62 @@ namespace FlyboMovie
             });
 
             MappersRegister.RegistMappers();
+
+            InitDatabse(app);
+        }
+
+        private void InitDatabse(IApplicationBuilder app)
+        {
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                dbContext.Database.Migrate();
+
+                if (!dbContext.Users.Any())
+                {
+                    var adminUser = new User()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Name = "zhanhui",
+                        Account="admin",
+                        Password = "123456abc",
+                        Type = UserType.Registered,
+                        Points = 100,
+                        RecordCreatedTime = DateTime.Now,
+                        RecordCreatedUser = -1,
+                    };
+                    var adminRole = new Role()
+                    {
+                        Name = "Admin",
+                        RecordCreatedTime = DateTime.Now,
+                        RecordCreatedUser = -1,
+                    };
+                    dbContext.SaveChanges();
+                    dbContext.UserRoles.Add(new UserRole
+                    {
+                        UserId = adminUser.Id,
+                        RoleId = adminRole.Id,
+                    });
+                    dbContext.OrderNumberSettings.Add(new OrderNumberSetting
+                    {
+                        Type = OrderType.Movie,
+                        Prefix = "MV",
+                        Seed = 1,
+                        RecordCreatedTime = DateTime.Now,
+                        RecordCreatedUser = -1,
+                    });
+                    dbContext.OrderNumberSettings.Add(new OrderNumberSetting
+                    {
+                        Type = OrderType.BuyOrder,
+                        Prefix = "BO",
+                        Seed = 1,
+                        RecordCreatedTime = DateTime.Now,
+                        RecordCreatedUser = -1,
+                    });
+                    dbContext.SaveChanges();
+                }
+
+            }
         }
     }
 }

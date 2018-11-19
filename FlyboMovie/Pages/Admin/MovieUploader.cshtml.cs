@@ -35,7 +35,7 @@ namespace FlyboMovie.Pages.Admin
                     ModelState.AddModelError("ViewModel.Poster", "文件大小超过限制（1M）！");
                     return;
                 }
-                if (ViewModel.Movie.Length > 209715200)
+                if (ViewModel.Movie != null && ViewModel.Movie.Length > 209715200)
                 {
                     ModelState.AddModelError("ViewModel.Movie", "文件大小超过限制（200M）！");
                     return;
