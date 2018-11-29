@@ -127,6 +127,8 @@ namespace FlyboMovie
                         RecordCreatedTime = DateTime.Now,
                         RecordCreatedUser = -1,
                     };
+                    dbContext.Users.Add(adminUser);
+                    dbContext.Roles.Add(adminRole);
                     dbContext.SaveChanges();
                     dbContext.UserRoles.Add(new UserRole
                     {

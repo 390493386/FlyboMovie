@@ -4,6 +4,6 @@
     ViewData["Title"] = "人气排行";
     ViewData["CurrentTab"] = Model.TabName;
 
-    Html.RenderPartial("./Components/_MoviesListPartial", Model.HottestMovies);
+    Html.RenderPartial("Components/_MoviesListPartial.cshtml", Model.HottestMovies);
 }
 
