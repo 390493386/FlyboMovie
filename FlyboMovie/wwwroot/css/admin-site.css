@@ -17,3 +17,14 @@ body {
 .nav {
    color:white; 
 }
+
+.movie-uploader .poster-preview {
+    text-align: center;
+    border: #ddd solid 1px;
+    border-radius: 5px;
+}
+
+    .movie-uploader .poster-preview img {
+        height: 350px;
+        text-align: center;
+    }
