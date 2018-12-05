@@ -19,7 +19,7 @@ namespace FlyboMovie.ViewModels
 
         [Required(ErrorMessage ="请添加视频封面海报")]
         [DisplayName("视频封面海报")]
-        public PosterData Poster { get; set; }
+        public IFormFile Poster { get; set; }
 
         //[Required(ErrorMessage ="请添加视频")]
         [DisplayName("视频")]

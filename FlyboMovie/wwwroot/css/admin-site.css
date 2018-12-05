@@ -36,9 +36,10 @@ body {
         height: 90%;
         background-color: #f5f5f5;
         border-top: #ddd solid 1px;
+        text-align: center;
     }
 
-.movie-uploader .poster-preview img {
-    width: 100%;
-    text-align: center;
-}
+        .movie-uploader .poster-preview .poster-preview-area img {
+            max-width: 100%;
+            max-height: 100%;
+        }

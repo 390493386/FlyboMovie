@@ -17,16 +17,16 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="ViewModel.Poster" class="control-label"></label>
-                    <input type="hidden" asp-for="ViewModel.Poster.ImgData" id="img-data" />
-                    <input type="hidden" asp-for="ViewModel.Poster.ImgType" id="img-type" />
+                    @*<input type="hidden" asp-for="ViewModel.Poster.ImgData" id="img-data" />
+                    <input type="hidden" asp-for="ViewModel.Poster.ImgType" id="img-type" />*@
                     <div class="poster-preview">
                         <div class="poster-preview-action" id="poster-select-btn">
                             <span class="glyphicon glyphicon-folder-open"></span>
                             <span>选择图片</span>
                         </div>
                         <div class="poster-preview-area">
-                            <input type="file" accept="image/*" id="poster-file-loader" style="display:none;" />
-                            <div id="originImgContainer"></div>
+                            <input asp-for="ViewModel.Poster" type="file" accept="image/*" id="poster-file-loader" style="display:none;" />
+                            <div id="originImgContainer" style="width:100%;height:100%;text-align:center;vertical-align:middle;"></div>
                         </div>
                     </div>
                     <span asp-validation-for="ViewModel.Poster" class="text-danger"></span>
@@ -63,7 +63,7 @@
                 originImg.attr('src', e.target.result);
                 originImgContainer.append(originImg);
 
-                loadJcrop(originImg);
+                //loadJcrop(originImg);
             }
         });
     });
@@ -77,12 +77,11 @@
         target.Jcrop({
             setSelect: [0, 0, 2100, 2800],
             aspectRatio: 21 / 28,
-            onSelect:onSelecImg
+            onSelect: onSelecImg
         });
     };
 
     var getCordedImg = function () {
-        debugger
         var originImg = $('#originImg')[0];
         if (!originImg) {
             return;

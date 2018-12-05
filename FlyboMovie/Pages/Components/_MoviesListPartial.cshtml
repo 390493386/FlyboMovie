@@ -5,7 +5,7 @@
     @foreach (var item in Model)
     {
         <div class="movie">
-            <a asp-page="./Detail" asp-route-movieId="@item.Id">
+            <a href="#">
                 <img class="poster" src="@item.PosterLink" />
             </a>
             <div class="title">
@@ -14,3 +14,35 @@
         </div>
     }
 }
+
+<div class="pay-info-mask" style="display:none;" id="pay-info-dialog">
+    <div class="movie-pay" id="movie-pay-area">
+        <p class="pay-info">
+            付费视频<br />
+            请长按识别下方二维码完成支付
+        </p>
+        <div class="pay-qr-code">
+            <img src="~/images/qrcode_8_8.jpg" />
+        </div>
+        <p class="finished-pay">支付完成</p>
+    </div>
+    <div class="movie-pay" id="movie-admin-area" style="display:none;">
+        <p class="pay-info">
+            长按识别下方二维码添加管理员<br />
+            微信号:T_T<br />
+            订单号:<span id="buy-order-number"></span><a id="copy-order-num" style="font-size:14px;color:white;text-decoration:underline;" data-clipboard-action="copy" data-clipboard-target="#buy-order-number"></a>
+        </p>
+        <div class="pay-qr-code">
+            <img src="~/images/admin_qr_code.jpg" />
+        </div>
+    </div>
+    <span class="iconfont icon-guanbi"></span>
+</div>
+<script>
+    $(".movie").click(function () {
+        $("#pay-info-dialog").show();
+    });
+    $("#pay-info-dialog .icon-guanbi").click(function () {
+        $("#pay-info-dialog").hide();
+    });
+</script>

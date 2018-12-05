@@ -30,7 +30,7 @@ namespace FlyboMovie.Pages.Admin
         {
             if (ModelState.IsValid)
             {
-                if (ViewModel.Poster.ImgData.Length > 1048576)
+                if (ViewModel.Poster.Length > 1048576)
                 {
                     ModelState.AddModelError("ViewModel.Poster", "文件大小超过限制（1M）！");
                     return;
@@ -42,12 +42,12 @@ namespace FlyboMovie.Pages.Admin
                 }
 
                 var moviePath = FileHelper.SaveFile(FileHelper.VideoPath, ViewModel.Movie);
-                //var posterPath = FileHelper.SaveFile(FileHelper.ImagePath, ViewModel.Poster);
+                var posterPath = FileHelper.SaveFile(FileHelper.ImagePath, ViewModel.Poster);
 
                 MovieDto movie = new MovieDto()
                 {
                     Name = ViewModel.Title,
-                    //PosterLink = FileHelper.RelativeImagePath + posterPath,
+                    PosterLink = FileHelper.RelativeImagePath + posterPath,
                     MovieLink1 = FileHelper.RelativeVideoPath + moviePath,
                     TrySeconds = ViewModel.TrySeconds
                 };
