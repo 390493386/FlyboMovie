@@ -6,40 +6,40 @@
 
 <div class="movie-uploader">
     <h3>添加视频</h3>
-    <div class="row">
-        <div class="col-md-4">
-            <form id="movie-upload-form" method="post" enctype="multipart/form-data">
+    <form id="movie-upload-form" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-4">
+
                 <div class="form-group">
                     <label asp-for="ViewModel.Title" class="control-label"></label>
                     <input asp-for="ViewModel.Title" type="text" class="form-control" />
                     <span asp-validation-for="ViewModel.Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ViewModel.TrySeconds" class="control-label"></label>
-                    <input asp-for="ViewModel.TrySeconds" type="text" class="form-control" />
-                    <span asp-validation-for="ViewModel.TrySeconds" class="text-danger"></span>
-                </div>
-                <div class="form-group">
                     <label asp-for="ViewModel.Poster" class="control-label"></label>
-                    <input id="poster-uploader" asp-for="ViewModel.Poster" type="file" accept="image/*" class="form-control" style="height:auto" />
+                    <input type="hidden" asp-for="ViewModel.Poster.ImgData" id="img-data" />
+                    <input type="hidden" asp-for="ViewModel.Poster.ImgType" id="img-type" />
+                    <div class="poster-preview">
+                        <div class="poster-preview-action" id="poster-select-btn">
+                            <span class="glyphicon glyphicon-folder-open"></span>
+                            <span>选择图片</span>
+                        </div>
+                        <div class="poster-preview-area">
+                            <input type="file" accept="image/*" id="poster-file-loader" style="display:none;" />
+                            <div id="originImgContainer"></div>
+                        </div>
+                    </div>
                     <span asp-validation-for="ViewModel.Poster" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="ViewModel.Movie" class="control-label"></label>
-                    <input asp-for="ViewModel.Movie" type="file" accept=".mp4,.ogg" class="form-control" style="height:auto" />
-                    <span asp-validation-for="ViewModel.Movie" class="text-danger"></span>
-                </div>
                 <button id="upload-movie" class="btn btn-default">开始上传</button>
-            </form>
+            </div>
         </div>
-        <div class="col-md-6 poster-preview">
-            <img />
-        </div>
-    </div>
+    </form>
 </div>
 <script>
     $(document).ready(function () {
         $("#upload-movie").click(function () {
+            getCordedImg();
             var uploadBtn = $(this);
             uploadBtn.attr('disabled', "true");
             uploadBtn.html("正在上传...");
@@ -47,21 +47,59 @@
             return true;
         });
 
-        $("#poster-uploader").change(function (e) {
+        $("#poster-select-btn").click(function () {
+            $("#poster-file-loader").click();
+        });
+
+        var originImgContainer = $("#originImgContainer");
+        $("#poster-file-loader").change(function (e) {
             var posterFile = this.files[0];
             var reader = new FileReader();
             reader.readAsDataURL(posterFile);
             reader.onload = function (e) {
-                var imgLabel = $(".poster-preview img");
-                imgLabel.attr('src', this.result);
-                loadJcrop(imgLabel);
+                debugger
+                originImgContainer.empty();
+                var originImg = $('<img id="originImg" />');
+                originImg.attr('src', e.target.result);
+                originImgContainer.append(originImg);
+
+                loadJcrop(originImg);
             }
         });
     });
 
+    var currentCords;
+    var onSelecImg = function (cords) {
+        currentCords = cords;
+        getCordedImg();
+    };
     var loadJcrop = function (target) {
         target.Jcrop({
-            aspectRatio: xsize / ysize
+            setSelect: [0, 0, 2100, 2800],
+            aspectRatio: 21 / 28,
+            onSelect:onSelecImg
         });
+    };
+
+    var getCordedImg = function () {
+        debugger
+        var originImg = $('#originImg')[0];
+        if (!originImg) {
+            return;
+        }
+        // Create a canvas to draw the cropped image.
+        var croppedCanvas = document.createElement("canvas");
+        croppedCanvas.width = currentCords.w;
+        croppedCanvas.height = currentCords.h;
+
+        // Draw the origignal image's selected area in this canvas.
+        var cropCanvasContext = croppedCanvas.getContext('2d');
+        cropCanvasContext.drawImage(originImg, currentCords.x, currentCords.y, currentCords.w, currentCords.h, 0, 0, croppedCanvas.width, croppedCanvas.height);
+        var imgData = croppedCanvas.toDataURL('img/jpg');
+
+        $("#img-data").val(imgData.substr(22));
+        $("#img-type").val('png');
+
+        $("#originImgContainer").append(croppedCanvas);
     };
 </script>
